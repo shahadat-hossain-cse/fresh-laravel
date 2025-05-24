@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 class FormController extends Controller
 {
@@ -46,7 +47,8 @@ class FormController extends Controller
     //    echo $student->first_name;
     //    echo $student->full_name();
     //     echo "<pre>";
-       $students = Student::all();
+       //$students = Student::all();
+       $students = DB::select("select * FROM students");
        //print_r($students);
        return view('edit',["students"=>$students]);
     //    echo "<pre>";

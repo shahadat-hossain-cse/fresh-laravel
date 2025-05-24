@@ -4,7 +4,7 @@
     </head>
     <body>
         @foreach($students as $student)
-            {{$student->full_name()}}
+            {{$student->first_name}}
 
         @endforeach
     </body>
