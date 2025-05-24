@@ -30,6 +30,13 @@ Route::get('/test', [TestController::class, 'test']);
 Route::get('/service/{id}/{cat_id?}/',[TestController::class, 'service']);
 
 Route::get('/create', [FormController::class, 'create']);
-Route::post('/save', [FormController::class, 'save']);
-Route::get('/edit/{id}',[FormController::class, 'edit']);
 
+Route::post('/save', [FormController::class, 'save']);
+
+Route::get('/student/edit/{id}',[FormController::class, 'edit']);
+
+Route::get('/student/list', [FormController::class, 'student_list']);
+Route::post('/student/update', [FormController::class, 'update']);
+Route::get('/student/delete/{id}', [FormController::class, 'delete']);
+Route::get('/student/view/{id}', [FormController::class, 'view']);
+Route::post('/student/remove', [FormController::class, 'remove']);

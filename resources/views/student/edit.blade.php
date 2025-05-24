@@ -13,41 +13,40 @@
     
 
 <div class="container">
-  <h1>Create Student</h1>
-    @if($errors->any())
-        @foreach($errors->all() as $error)
-        <h5 class="text-warning">{{$error}}</h5>
-        @endforeach
-    @endif
-    <form action="/save" method="post">
+  <h1>Student Information</h1>
+  <div>
+    <form action="/student/update" method="post">
     @csrf
         <label for="">First Name </label> 
-        <input type="text" name="first_name" >
+        <input type="text" name="first_name" value="{{$student->first_name;}}">
         @error('first_name')
             <div class="text-warning">{{$message}}</div>
         @enderror
         <br>
         <br>
         <label for="">Last Name </label> 
-        <input type="text" name="last_name" value="{{old('last_name')}}">
+        <input type="text" name="last_name"  value="{{$student->last_name;}}">
         @error('last_name')
             <div class="text-warning">{{$message}}</div>
         @enderror
         <br>
         <label for="">Email </label> 
-        <input type="email" name="email" value="{{old('email')}}">
+        <input type="email" name="email" value="{{$student->email;}}">
         @error('email')
             <div class="text-warning">{{$message}}</div>
         @enderror
         <br>
         <label for="">Std Id </label> 
-        <input type="text" name="std_id" value="{{old('std_id')}}">
+        <input type="text" name="std_id" value="{{$student->std_id}}">
         @error('std_id')
             <div class="text-warning">{{$message}}</div>
         @enderror
         <br>
-        <button type="submit">Submit</button>
+        <input type="hidden" name="id" value="{{$student->id}}">
+        <button type="submit" class="btn btn-success">Update</button>
     </form>
+  </div>
+   
 </div>
 
 </body>
