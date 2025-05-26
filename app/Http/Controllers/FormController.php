@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 use App\Models\Student;
 class FormController extends Controller
 {
@@ -90,6 +91,15 @@ class FormController extends Controller
         // echo "<pre>";
         // print_r($students);
 
+        
+
+        // if(Auth::user()->user_type=="Super Admin")
+        // {
+        //     return view('student.list', ["students" => $students]);
+        // }
+        // else{
+        //     return redirect('/user-logout');
+        // }
         return view('student.list', ["students" => $students]);
     }
 
