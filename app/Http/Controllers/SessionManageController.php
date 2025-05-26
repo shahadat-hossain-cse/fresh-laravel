@@ -11,7 +11,7 @@ class SessionManageController extends Controller
 {
     function login()
     {
-        return view('session.login');
+        return view('session.login'); 
     }
     function login_submit(Request $request)
     {
@@ -34,6 +34,7 @@ class SessionManageController extends Controller
                 'email' => $user->email,
                 'user_type' => $user->user_type
             ]);
+            return redirect(url('/session_check'));
         } else {
             return redirect()->back()->with('error','Invalid Email or Password'); 
         }
@@ -44,6 +45,9 @@ class SessionManageController extends Controller
         if(session('name'))
         {
             echo session('name');
+            echo "<br>";
+             echo session('user_type');
+             return redirect(url('/session_profile'));
         }
         
         
@@ -64,11 +68,15 @@ class SessionManageController extends Controller
         if($username=="sdt")
         {
             $req->session()->flash('status', 'Authentication successful!');
+            $req->session()->flash('auth_message', 'Authentication Message successful!');
+            // $req->session()->flash('auth_message', 'Authentication successful!');
+            // $req->session()->flash('auth_message', 'Authentication successful!');
         }
         else
         {
             $req->session()->flash('status', 'Invalid Credentials');
         }
-        return view('session.flash-form');
+       // return view('session.flash-form'); 
+       return redirect(url('/session_flash'));
     }
 }

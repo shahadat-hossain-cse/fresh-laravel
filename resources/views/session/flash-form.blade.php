@@ -9,6 +9,10 @@
     @if(session('status'))
     <h3>{{session('status')}}</h3>
     @endif
+
+    @if(session('auth_message'))
+    <h3>{{session('auth_message')}}</h3>
+    @endif
     <form method="post" action="session_flash_form_submit">
         @csrf
       

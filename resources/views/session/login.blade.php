@@ -23,7 +23,6 @@
             <div class="col-md-6">
                 @if(!empty(session('error')))
                 <div class="alert alert-danger">{{session('error')}}</div>
-
                 @endif
                 
             </div>
