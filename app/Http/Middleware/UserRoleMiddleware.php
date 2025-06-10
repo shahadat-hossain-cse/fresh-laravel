@@ -6,17 +6,19 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Auth;
-class AdminMiddleware
+class UserRoleMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if(!empty(Auth::check()) && Auth::user()->user_type=="Admin")
+        //print_r($roles);
+        if (!empty(Auth::check()) && in_array(Auth::user()->user_type, $roles))        
         {
+            
             return $next($request); 
         }
         else
@@ -24,6 +26,5 @@ class AdminMiddleware
             Auth::logout();
             return redirect(url('user-login')); 
         }
-        //return $next($request);
     }
 }

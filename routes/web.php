@@ -8,8 +8,9 @@ use App\Http\Controllers\SessionManageController;
 Route::get('/', function () {
     //return view('welcome');
     //echo "Welcome to Home Page";
-    return view('home');
-});
+    echo "got it";
+    //return view('home');
+})->middleware('role:Super Admin,Admin');
 
 Route::get('/about', function(){
     //echo "Welcome to About Page";
@@ -32,21 +33,26 @@ Route::get('/test', [TestController::class, 'test']);
 Route::get('/service/{id}/{cat_id?}/',[TestController::class, 'service']);
 
 // Route::get('/create', [FormController::class, 'create']);
-Route::middleware('admin')->group(function(){
+Route::middleware(['signin','role:Super Admin,Admin'])->group(function(){
     Route::get('/create', [FormController::class, 'create']);
-      
+
 });
 Route::post('/save', [FormController::class, 'save']);
 
 Route::get('/student/edit/{id}',[FormController::class, 'edit']);
 
 //Route::get('/student/list', [FormController::class, 'student_list']);
-//Route::get('/student/list', [FormController::class, 'student_list'])->middleware('superadmin');
 
-Route::middleware('superadmin')->group(function(){
-    Route::get('/student/list', [FormController::class, 'student_list']);    
-});
 
+// Route::middleware('superadmin')->group(function(){
+//     Route::get('/student/list', [FormController::class, 'student_list']);    
+// });
+// Route::middleware('signin')->group(function(){
+//     Route::get('/student/list', [FormController::class, 'student_list']);    
+// });
+
+Route::get('/student/list', [FormController::class, 'student_list'])
+->middleware(['signin', 'role:Super Admin,Admin']); 
 
 Route::post('/student/update', [FormController::class, 'update']);
     Route::get('/student/delete/{id}', [FormController::class, 'delete']);
@@ -58,7 +64,7 @@ Route::post('/student/update', [FormController::class, 'update']);
 Route::get('/user-registration',[AuthController::class, 'registration']);
 Route::post('/user-registration',[AuthController::class, 'registration_submit']);
 Route::get('/user-login',[AuthController::class, 'login']);
-Route::post('/user-login',[AuthController::class, 'login_submit']);
+Route::post('/user-login',[AuthController::class, 'login_submit']); 
 Route::get('/user-logout',[AuthController::class, 'logout']);
 
 

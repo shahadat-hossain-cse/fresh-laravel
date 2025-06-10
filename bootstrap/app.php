@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\SuperAdminMiddleware;
+use App\Http\Middleware\UserRoleMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,13 +16,19 @@ return Application::configure(basePath: dirname(__DIR__))
         //global middleware
 
         // group middleware
-        $middleware->appendToGroup('superadmin',[
+        $middleware->appendToGroup('signin',[
             SuperAdminMiddleware::class
         ]);
-
         $middleware->appendToGroup('admin', [
             AdminMiddleware::class
         ]);
+        $middleware->alias([
+            'role' => UserRoleMiddleware::class
+        ]);
+        // $middleware->alias([
+        //     'utypes' => UserRoleMiddleware::class
+        // ]);
+        
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
