@@ -44,16 +44,16 @@ class AuthController extends Controller
         
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password],$remember))
         {
-            //  echo Auth::user()->user_type;
+            echo Auth::user()->user_type;
             //  echo Auth::user()->name;
             //return redirect('panel/dashboard');
-            if(Auth::user()->user_type=="Super Admin")
-            {
-                return redirect('student/list');
-            }
-            else{
-                return redirect('create');
-            }
+            // if(Auth::user()->user_type=="Super Admin")
+            // {
+            //     return redirect('student/list');
+            // }
+            // else{
+            //     return redirect('create');
+            // }
             
         }
         else 

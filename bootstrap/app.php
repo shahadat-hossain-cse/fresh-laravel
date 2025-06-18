@@ -6,9 +6,11 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\SuperAdminMiddleware;
 use App\Http\Middleware\UserRoleMiddleware;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CheckTokenMiddleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
@@ -28,6 +30,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // $middleware->alias([
         //     'utypes' => UserRoleMiddleware::class
         // ]);
+
+        $middleware->alias([
+            'token.check' => CheckTokenMiddleware::class
+        ]);
         
     })
     ->withExceptions(function (Exceptions $exceptions) {
