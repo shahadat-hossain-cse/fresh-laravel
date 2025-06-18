@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\SuperAdminMiddleware;
+use App\Http\Middleware\UserRoleMiddleware;
+use App\Http\Middleware\AdminMiddleware;
+
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\AuthController;
@@ -10,7 +14,7 @@ Route::get('/', function () {
     //echo "Welcome to Home Page";
     echo "got it";
     //return view('home');
-})->middleware('role:Super Admin,Admin');
+});
 
 Route::get('/about', function(){
     //echo "Welcome to About Page";
@@ -32,11 +36,15 @@ Route::get('/test', [TestController::class, 'test']);
 
 Route::get('/service/{id}/{cat_id?}/',[TestController::class, 'service']);
 
-Route::get('/create', [FormController::class, 'create']);
-// Route::middleware(['signin','role:Super Admin,Admin'])->group(function(){
-//     Route::get('/create', [FormController::class, 'create']);
+// Route::get('/create', [FormController::class, 'create'])
+// ->middleware(
+//         SuperAdminMiddleware::class, 
+//         UserRoleMiddleware::class.':Admin,Super Admin'
+//     );;
+Route::middleware(['signin','role:Super Admin,Admin'])->group(function(){
+    Route::get('/create', [FormController::class, 'create']);
 
-// });
+});
 Route::post('/save', [FormController::class, 'save']);
 
 Route::get('/student/edit/{id}',[FormController::class, 'edit']);
@@ -47,12 +55,16 @@ Route::get('/student/edit/{id}',[FormController::class, 'edit']);
 // Route::middleware('superadmin')->group(function(){
 //     Route::get('/student/list', [FormController::class, 'student_list']);    
 // });
-Route::middleware('signin')->group(function(){
-    Route::get('/student/list', [FormController::class, 'student_list']);    
-});
 
 // Route::get('/student/list', [FormController::class, 'student_list'])
-// ->middleware(['signin', 'role:Super Admin,Admin']); 
+//     ->middleware(
+//         SuperAdminMiddleware::class, 
+//         UserRoleMiddleware::class.':Admin,Super Admin'
+//     );
+
+
+Route::get('/student/list', [FormController::class, 'student_list'])
+->middleware(['signin', 'role:Super Admin,Admin']); 
 
 Route::post('/student/update', [FormController::class, 'update']);
     Route::get('/student/delete/{id}', [FormController::class, 'delete']);

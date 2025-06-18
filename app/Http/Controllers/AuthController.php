@@ -47,13 +47,13 @@ class AuthController extends Controller
             echo Auth::user()->user_type;
             //  echo Auth::user()->name;
             //return redirect('panel/dashboard');
-            // if(Auth::user()->user_type=="Super Admin")
-            // {
-            //     return redirect('student/list');
-            // }
-            // else{
-            //     return redirect('create');
-            // }
+            if(Auth::user()->user_type=="Super Admin")
+            {
+                return redirect('student/list');
+            }
+            else{
+                return redirect('create');
+            }
             
         }
         else 

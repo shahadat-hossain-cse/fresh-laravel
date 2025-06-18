@@ -15,23 +15,26 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //global middleware
+        // //global middleware
 
-        // group middleware
-        $middleware->appendToGroup('signin',[
-            SuperAdminMiddleware::class
-        ]);
-        $middleware->appendToGroup('admin', [
-            AdminMiddleware::class
-        ]);
-        $middleware->alias([
-            'role' => UserRoleMiddleware::class
-        ]);
-        // $middleware->alias([
-        //     'utypes' => UserRoleMiddleware::class
+        // // group middleware
+        // $middleware->appendToGroup('signin',[
+        //     SuperAdminMiddleware::class
         // ]);
+        
+        // $middleware->appendToGroup('admin', [
+        //     AdminMiddleware::class
+        // ]);
+        // // $middleware->alias([
+        // //     'permission' => UserRoleMiddleware::class
+        // // ]);
+        // // $middleware->alias([
+        // //     'utypes' => UserRoleMiddleware::class
+        // // ]);
 
         $middleware->alias([
+            'signin' => SuperAdminMiddleware::class,
+            'role' => UserRoleMiddleware::class,
             'token.check' => CheckTokenMiddleware::class
         ]);
         

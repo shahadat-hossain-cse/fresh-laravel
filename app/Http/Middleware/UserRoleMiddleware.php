@@ -19,7 +19,7 @@ class UserRoleMiddleware
         if (!empty(Auth::check()) && in_array(Auth::user()->user_type, $roles))        
         {
             
-            return $next($request); 
+            return $next($request);  
         }
         else
         {

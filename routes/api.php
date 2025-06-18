@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckTokenMiddleware;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\TestController;
 use App\Http\Controllers\api\TokenController;
@@ -25,9 +26,9 @@ Route::post('/login',[TokenController::class, 'login']);
 
 Route::post('/get_token',[TokenController::class, 'get_token']);
 
+// Route::middleware('token.check')->group(function () {
+//Route::middleware(CheckTokenMiddleware::class)->group(function () {
 Route::middleware('token.check')->group(function () {
-
-    
     Route::get('/user', function (Request $request) {
         return response()->json([
             'user' => $request->get('token_user'),
